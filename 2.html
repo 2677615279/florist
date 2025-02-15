@@ -21,14 +21,14 @@
         img {
             width: 100%;
             height: 100%;
-            object-fit: cover;  /* 保持完整显示 */
+            object-fit: cover;  
             object-position: center; /* 默认居中 */
         }
 
-        /* 手机端优化（二维码靠近屏幕中央） */
+        /* 手机端优化（确保二维码正中心） */
         @media screen and (max-width: 768px) {
             img {
-                object-position: 80% center; /* 向右移动二维码区域，使其更接近屏幕中心 */
+                object-position: 90% center; /* 进一步向右移动，确保二维码正中心 */
             }
         }
     </style>
