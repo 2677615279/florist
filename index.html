@@ -65,30 +65,48 @@
 </head>
 <body>
     <div class="carousel">
-        <img src="./zfbqrcodedemo.png" class="carousel-item active">
-        <img src="./wechatqrcodedemo.png" class="carousel-item">
         <img src="./index.png" class="carousel-item">
+        <img src="./zfbqrcodedemo.png" class="carousel-item">
+        <img src="./wechatqrcodedemo.png" class="carousel-item">
     </div>
 
-    <div class="indicators">
-        <span class="indicator active" data-index="0"></span>
-        <span class="indicator" data-index="1"></span>
-        <span class="indicator" data-index="2"></span>
-    </div>
+    <div class="indicators"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const items = document.querySelectorAll('.carousel-item');
-            const indicators = document.querySelectorAll('.indicator');
+            const indicatorsContainer = document.querySelector('.indicators');
             let currentIndex = 0;
             let interval;
 
+            function generateIndicators() {
+                // Clear existing indicators
+                indicatorsContainer.innerHTML = ''; 
+
+                // Only generate indicators if there are more than 1 image
+                if (items.length >= 2) {
+                    for (let i = 0; i < items.length; i++) {
+                        const indicator = document.createElement('span');
+                        indicator.classList.add('indicator');
+                        indicator.dataset.index = i;
+                        indicatorsContainer.appendChild(indicator);
+                    }
+                    // Activate the first indicator by default
+                    indicatorsContainer.children[currentIndex].classList.add('active');
+                }
+            }
+
             function showItem(index) {
+                if (index >= items.length) return; // Check if the index is valid
                 items[currentIndex].classList.remove('active');
-                indicators[currentIndex].classList.remove('active');
+                if (indicatorsContainer.children[currentIndex]) {
+                    indicatorsContainer.children[currentIndex].classList.remove('active');
+                }
                 currentIndex = index;
                 items[currentIndex].classList.add('active');
-                indicators[currentIndex].classList.add('active');
+                if (indicatorsContainer.children[currentIndex]) {
+                    indicatorsContainer.children[currentIndex].classList.add('active');
+                }
             }
 
             function showNextItem() {
@@ -100,14 +118,26 @@
                 interval = setInterval(showNextItem, 5000);
             }
 
-            indicators.forEach(indicator => {
-                indicator.addEventListener('click', function() {
-                    showItem(parseInt(this.dataset.index));
+            // Generate indicators dynamically based on the number of images
+            generateIndicators();
+
+            // If there is at least one image, show the first image
+            if (items.length > 0) {
+                showItem(0);
+            }
+
+            // Event listener for indicator click
+            indicatorsContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('indicator')) {
+                    showItem(parseInt(e.target.dataset.index));
                     resetInterval();
-                });
+                }
             });
 
-            interval = setInterval(showNextItem, 5000);
+            // Start the interval if there are images and more than 1 image
+            if (items.length > 1) {
+                interval = setInterval(showNextItem, 5000);
+            }
         });
     </script>
 </body>
