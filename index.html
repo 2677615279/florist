@@ -64,10 +64,21 @@
     </style>
 </head>
 <body>
+    
+    <!-- 
+        主要修改点：
+        动态显示轮播指示器（标志点）： 在 generateIndicators 函数中，只有当图片数量大于等于 2 时，才会生成标志点。如果只有 1 张图片，就不会显示任何标志点。
+        只启动轮播功能： 只有在图片数量大于 1 时，才会启用自动轮播功能。
+
+        结果：
+        图片数量为 1 时： 页面将不显示任何轮播点，且不会启动自动轮播。
+        图片数量大于等于 2 时： 页面将显示轮播点，并允许用户点击手动切换图片，同时启动自动轮播功能。 
+    -->
+
     <div class="carousel">
         <img src="./index.png" class="carousel-item">
-        <img src="./zfbqrcodedemo.png" class="carousel-item">
-        <img src="./wechatqrcodedemo.png" class="carousel-item">
+        <!--将来可能添加的图片-->
+        <!-- <img src="picturepath" class="carousel-item"><img src="picturepath" class="carousel-item"> -->
     </div>
 
     <div class="indicators"></div>
